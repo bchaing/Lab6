@@ -4,7 +4,7 @@ class JournalEntry extends HTMLElement {
     super();
 
     // templated HTML content
-    const template = document.createElement('template');
+    const template = document.createElement("template");
 
     template.innerHTML = `
         <style>
@@ -50,9 +50,9 @@ class JournalEntry extends HTMLElement {
         `;
 
     // create a shadow root for this web component
-    this.attachShadow({ mode: 'open' })
-    // attach cloned content of template to shadow DOM 
-    this.shadowRoot.appendChild(template.content.cloneNode(true))
+    this.attachShadow({ mode: "open" });
+    // attach cloned content of template to shadow DOM
+    this.shadowRoot.appendChild(template.content.cloneNode(true));
   }
 
   /*
@@ -60,7 +60,7 @@ class JournalEntry extends HTMLElement {
    * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/get
    */
   get entry() {
-    return this.getAttribute('entry');
+    return this.getAttribute("entry");
   }
 
   /*
@@ -68,11 +68,12 @@ class JournalEntry extends HTMLElement {
    * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/set
    */
   set entry(entry) {
-    /* 
+    /*
      * TODO: set the entry title, date, and content fields in this component
      */
-    
-    // CODE GOES HERE
+    this.shadowRoot.querySelector(".entry-title").innerText = entry.title;
+    this.shadowRoot.querySelector(".entry-date").innerText = entry.date;
+    this.shadowRoot.querySelector(".entry-content").innerText = entry.content;
 
     if (entry.image) {
       let entryImage;
@@ -84,21 +85,20 @@ class JournalEntry extends HTMLElement {
        */
 
       // CODE GOES HERE vvv
-
-
-
-
-
+      entryImage = document.createElement("img");
+      entryImage.className = "entry-image";
+      entryImage.src = entry.image.src;
+      entryImage.alt = entry.image.alt;
+      this.shadowRoot.querySelector(".entry").append(entryImage);
       // CODE GOES HERE ^^^
 
       /* ------------- do not edit this code, it is for your debugging purposes ------------- */
       try {
         window.logCheckpoint('"entryImage"', imgExample, entryImage);
-      } catch(err) {
-        console.log('variable name changed: ', err);
+      } catch (err) {
+        console.log("variable name changed: ", err);
       }
       /* ------------- do not edit this code, it is for your debugging purposes ------------- */
-
     }
     if (entry.audio) {
       let entryAudio;
@@ -110,44 +110,40 @@ class JournalEntry extends HTMLElement {
        */
 
       // CODE GOES HERE vvv
+      entryAudio = document.createElement("audio");
+      entryAudio.className = "entry-audio";
+      entryAudio.src = entry.audio;
+      entryAudio.controls = true;
 
-
-
-
-
-
+      this.shadowRoot.querySelector(".entry").append(entryAudio);
       // CODE GOES HERE ^^^
-      
 
-      
       /* ------------- do not edit this code, it is for your debugging purposes ------------- */
       try {
         window.logCheckpoint('"entryAudio"', exampleAudio, entryAudio);
-      } catch(err) {
-        console.log('variable name changed: ', err);
+      } catch (err) {
+        console.log("variable name changed: ", err);
       }
       /* ------------- do not edit this code, it is for your debugging purposes ------------- */
-
     }
-    this.setAttribute('entry', entry);
+    this.setAttribute("entry", entry);
 
     /* ------------- do not edit this code, it is for your debugging purposes ------------- */
     try {
       window.logCheckpoint('"entry"', exampleEntry, entry);
-    } catch(err) {
-      console.log('variable name changed: ', err);
+    } catch (err) {
+      console.log("variable name changed: ", err);
     }
     /* ------------- do not edit this code, it is for your debugging purposes ------------- */
   }
-
 }
 
 /*
- * Define a custom element for the JournalEntry web component, 
+ * Define a custom element for the JournalEntry web component,
  * where 'journal-entry' is the string that represents this element.
  * https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements
- */ 
-customElements.define('journal-entry', JournalEntry);
+ */
+customElements.define("journal-entry", JournalEntry);
 
 /**
  * JSON Format:
@@ -165,33 +161,30 @@ customElements.define('journal-entry', JournalEntry);
  * }
  */
 
-
-
-
-
-
-
 /* ------------- do not edit this code, it is for your debugging purposes ------------- */
 const exampleEntry = {
-  title: 'entry title',
-  date: 'mm/dd/yyyy',
-  content: 'some sentences of entry content',
-  audio: 'there may or may not be audio',
-  image: 'there may or may not be image'
-}
-const titleStyle = 'font-weight: bold; font-size: 16px; color: blue;';
-const contentStyle = 'font-weight: bold; font-size: 12px';
-const sectionBreak = '%c------------------------------------------------------------------------'
-const imgExample = '<img class="entry-image" src="path/to/image.jpg" alt="some alternate text"/>'
-const exampleAudio = '<audio class="entry-audio" src="https://url-for-source-audio.mp3" controls="">'
+  title: "entry title",
+  date: "mm/dd/yyyy",
+  content: "some sentences of entry content",
+  audio: "there may or may not be audio",
+  image: "there may or may not be image",
+};
+const titleStyle = "font-weight: bold; font-size: 16px; color: blue;";
+const contentStyle = "font-weight: bold; font-size: 12px";
+const sectionBreak =
+  "%c------------------------------------------------------------------------";
+const imgExample =
+  '<img class="entry-image" src="path/to/image.jpg" alt="some alternate text"/>';
+const exampleAudio =
+  '<audio class="entry-audio" src="https://url-for-source-audio.mp3" controls="">';
 
 window.logCheckpoint = (task, example, value) => {
   if (!window.logCheckpoints) return;
-  console.log(`%cTask ${task}: `, titleStyle)
-  console.log(`%cyour ${task} should look like this: `, contentStyle)
+  console.log(`%cTask ${task}: `, titleStyle);
+  console.log(`%cyour ${task} should look like this: `, contentStyle);
   console.log(example);
   console.log(`%cyour ${task}: `, contentStyle);
   console.log(value);
   console.log(sectionBreak, contentStyle);
-}
+};
 /* ------------- do not edit this code, it is for your debugging purposes ------------- */
